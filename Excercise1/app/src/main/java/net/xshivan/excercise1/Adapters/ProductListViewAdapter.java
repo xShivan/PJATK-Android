@@ -1,0 +1,71 @@
+package net.xshivan.excercise1.Adapters;
+
+import android.app.Activity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import net.xshivan.excercise1.R;
+
+public class ProductListViewAdapter extends BaseAdapter {
+
+    private Activity activity;
+
+    public ArrayList<HashMap> list;
+
+    public ProductListViewAdapter(Activity activity, ArrayList<HashMap> list) {
+        super();
+
+        this.activity = activity;
+        this.list = list;
+    }
+
+    @Override
+    public int getCount() {
+        return list.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return list.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup viewGroup) {
+        ProductListItemViewModel productListItemViewModel;
+        LayoutInflater inflater =  activity.getLayoutInflater();
+
+        if (convertView == null)
+        {
+            convertView = inflater.inflate(R.layout.product_list_item, null);
+            productListItemViewModel = new ProductListItemViewModel();
+            productListItemViewModel.textViewProductName = (TextView) convertView.findViewById(R.id.textViewProductName);
+            productListItemViewModel.checkBoxIsPurchased = (CheckBox) convertView.findViewById(R.id.checkBoxIsPurchased);
+            convertView.setTag(productListItemViewModel);
+        }
+        else
+            productListItemViewModel = (ProductListItemViewModel) convertView.getTag();
+
+        HashMap map = list.get(position);
+        productListItemViewModel.textViewProductName.setText((String) map.get(ProductListViewItemColumns.COLUMN_PRODUCT_NAME));
+        productListItemViewModel.checkBoxIsPurchased.setChecked((Boolean) map.get(ProductListViewItemColumns.COLUMN_IS_PURCHASED));
+
+        return convertView;
+    }
+
+    private class ProductListItemViewModel {
+        public CheckBox checkBoxIsPurchased;
+        public TextView textViewProductName;
+    }
+}

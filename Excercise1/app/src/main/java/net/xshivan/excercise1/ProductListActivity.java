@@ -2,20 +2,25 @@ package net.xshivan.excercise1;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import net.xshivan.excercise1.Adapters.ProductListViewAdapter;
+import net.xshivan.excercise1.Adapters.ProductListViewItemColumns;
+
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class ProductListActivity extends AppCompatActivity {
 
-    private List<String> productList = new ArrayList<String>();
+    private ArrayList<HashMap> productList = new ArrayList<HashMap>();
+
+    private ProductListViewAdapter productListViewAdapter = new ProductListViewAdapter(this, productList);
 
     public void handleBtnAddProductClick(View view) {
         final EditText input = new EditText(this);
@@ -26,14 +31,14 @@ public class ProductListActivity extends AppCompatActivity {
             .setMessage("Type in your product:")
             .setView(input)
             .setCancelable(true)
-            .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            .setPositiveButton("Add", new OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     String product = input.getText().toString();
                     addProduct(product);
                     dialog.cancel();
                 }
             })
-            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            .setNegativeButton("Cancel", new OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.cancel();
                 }
@@ -49,18 +54,26 @@ public class ProductListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
+
+        getInitialProductList();
+        ListView listViewProducts = (ListView) findViewById(R.id.listViewProducts);
+
+        listViewProducts.setAdapter(productListViewAdapter);
+        productListViewAdapter.notifyDataSetChanged();
+    }
+
+    private void getInitialProductList() {
+        HashMap temp = new HashMap();
+        temp.put(ProductListViewItemColumns.COLUMN_PRODUCT_NAME, "Colored Notebooks");
+        temp.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, true);
+        productList.add(temp);
     }
 
     private void addProduct(String product) {
-        ListView listView = getProductListView();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.product_list_item, productList);
-        listView.setAdapter(arrayAdapter);
-
-        arrayAdapter.add(product);
-        arrayAdapter.notifyDataSetChanged();
-    }
-
-    private ListView getProductListView() {
-        return (ListView) findViewById(R.id.listViewProducts);
+        HashMap temp = new HashMap();
+        temp.put(ProductListViewItemColumns.COLUMN_PRODUCT_NAME, product);
+        temp.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, false);
+        productList.add(temp);
+        productListViewAdapter.notifyDataSetChanged();
     }
 }
