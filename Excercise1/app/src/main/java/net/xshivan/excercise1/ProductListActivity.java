@@ -3,8 +3,8 @@ package net.xshivan.excercise1;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
@@ -66,6 +66,7 @@ public class ProductListActivity extends AppCompatActivity {
         HashMap temp = new HashMap();
         temp.put(ProductListViewItemColumns.COLUMN_PRODUCT_NAME, "Colored Notebooks");
         temp.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, true);
+        temp.put(ProductListViewItemColumns.ID, -1);
         productList.add(temp);
     }
 
@@ -73,7 +74,20 @@ public class ProductListActivity extends AppCompatActivity {
         HashMap temp = new HashMap();
         temp.put(ProductListViewItemColumns.COLUMN_PRODUCT_NAME, product);
         temp.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, false);
+        temp.put(ProductListViewItemColumns.ID, generateTemporaryProductId());
         productList.add(temp);
         productListViewAdapter.notifyDataSetChanged();
+    }
+
+    private int generateTemporaryProductId() {
+        int minId = -1;
+
+        for (HashMap productHashSet : productList) {
+            int productId = (int)productHashSet.get(ProductListViewItemColumns.ID);
+                if (productId <= minId)
+                    minId = productId - 1;
+            }
+
+        return minId;
     }
 }

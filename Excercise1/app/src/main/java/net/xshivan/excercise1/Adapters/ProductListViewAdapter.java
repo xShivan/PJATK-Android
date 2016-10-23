@@ -1,15 +1,18 @@
 package net.xshivan.excercise1.Adapters;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import net.xshivan.excercise1.R;
 
@@ -43,7 +46,7 @@ public class ProductListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        ProductListItemViewModel productListItemViewModel;
+        final ProductListItemViewModel productListItemViewModel;
         LayoutInflater inflater =  activity.getLayoutInflater();
 
         if (convertView == null)
@@ -57,9 +60,15 @@ public class ProductListViewAdapter extends BaseAdapter {
         else
             productListItemViewModel = (ProductListItemViewModel) convertView.getTag();
 
-        HashMap map = list.get(position);
+        final HashMap map = list.get(position);
         productListItemViewModel.textViewProductName.setText((String) map.get(ProductListViewItemColumns.COLUMN_PRODUCT_NAME));
         productListItemViewModel.checkBoxIsPurchased.setChecked((Boolean) map.get(ProductListViewItemColumns.COLUMN_IS_PURCHASED));
+        productListItemViewModel.checkBoxIsPurchased.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            map.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, b);
+            }
+        });
 
         return convertView;
     }
