@@ -1,7 +1,6 @@
 package net.xshivan.excercise1.Adapters;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import net.xshivan.excercise1.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-
-import net.xshivan.excercise1.R;
 
 public class ProductListViewAdapter extends BaseAdapter {
 
