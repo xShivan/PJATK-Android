@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class ProductListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
+        final int internalPostion = position;
         final ProductListItemViewModel productListItemViewModel;
         LayoutInflater inflater =  activity.getLayoutInflater();
 
@@ -53,13 +55,25 @@ public class ProductListViewAdapter extends BaseAdapter {
             productListItemViewModel = new ProductListItemViewModel();
             productListItemViewModel.textViewProductName = (TextView) convertView.findViewById(R.id.textViewProductName);
             productListItemViewModel.checkBoxIsPurchased = (CheckBox) convertView.findViewById(R.id.checkBoxIsPurchased);
+            productListItemViewModel.buttonDeleteProduct = (Button) convertView.findViewById(R.id.buttonDeleteProduct);
             convertView.setTag(productListItemViewModel);
         }
         else
             productListItemViewModel = (ProductListItemViewModel) convertView.getTag();
 
         final HashMap map = list.get(position);
+
+        final ProductListViewAdapter instance = this;
+        productListItemViewModel.buttonDeleteProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list.remove(internalPostion);
+                instance.notifyDataSetChanged();
+            }
+        });
+
         productListItemViewModel.textViewProductName.setText((String) map.get(ProductListViewItemColumns.COLUMN_PRODUCT_NAME));
+
         productListItemViewModel.checkBoxIsPurchased.setChecked((Boolean) map.get(ProductListViewItemColumns.COLUMN_IS_PURCHASED));
         productListItemViewModel.checkBoxIsPurchased.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -74,5 +88,6 @@ public class ProductListViewAdapter extends BaseAdapter {
     private class ProductListItemViewModel {
         public CheckBox checkBoxIsPurchased;
         public TextView textViewProductName;
+        public Button buttonDeleteProduct;
     }
 }
