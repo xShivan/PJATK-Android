@@ -46,13 +46,10 @@ public class ProductListActivity extends AppCompatActivity {
             .create().show();
     }
 
-    public void removeProduct() {
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_product_list);
 
         getInitialProductList();
@@ -63,31 +60,16 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
     private void getInitialProductList() {
-        HashMap temp = new HashMap();
-        temp.put(ProductListViewItemColumns.COLUMN_PRODUCT_NAME, "Colored Notebooks");
-        temp.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, true);
-        temp.put(ProductListViewItemColumns.ID, -1);
-        productList.add(temp);
+        for (HashMap productHashMap : DataAccess.getProducts())
+            productList.add(productHashMap);
     }
 
     private void addProduct(String product) {
         HashMap temp = new HashMap();
         temp.put(ProductListViewItemColumns.COLUMN_PRODUCT_NAME, product);
         temp.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, false);
-        temp.put(ProductListViewItemColumns.ID, generateTemporaryProductId());
         productList.add(temp);
         productListViewAdapter.notifyDataSetChanged();
-    }
-
-    private int generateTemporaryProductId() {
-        int minId = -1;
-
-        for (HashMap productHashSet : productList) {
-            int productId = (int)productHashSet.get(ProductListViewItemColumns.ID);
-                if (productId <= minId)
-                    minId = productId - 1;
-            }
-
-        return minId;
+        DataAccess.saveProducts(productList);
     }
 }

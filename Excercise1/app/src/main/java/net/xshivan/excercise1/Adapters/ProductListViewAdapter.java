@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import net.xshivan.excercise1.DataAccess;
 import net.xshivan.excercise1.R;
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class ProductListViewAdapter extends BaseAdapter {
             public void onClick(View view) {
                 list.remove(internalPostion);
                 instance.notifyDataSetChanged();
+                DataAccess.saveProducts(instance.list);
             }
         });
 
@@ -79,6 +81,7 @@ public class ProductListViewAdapter extends BaseAdapter {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             map.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, b);
+            DataAccess.saveProducts(instance.list);
             }
         });
 
