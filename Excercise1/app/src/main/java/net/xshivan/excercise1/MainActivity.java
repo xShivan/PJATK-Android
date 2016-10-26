@@ -12,9 +12,22 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void handleBtnSettingsClick(View view) {
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ApplicationSettings applicationSettings = SharedPreferencesAccess.loadPreferences(getApplicationContext());
+        SharedPreferencesAccess.applyPreferences(applicationSettings, this);
+
+        if (applicationSettings.navigateToProductsOnStart) {
+            Intent intent = new Intent(getApplicationContext(), ProductListActivity.class);
+            startActivity(intent);
+        }
     }
 }
