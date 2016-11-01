@@ -1,6 +1,10 @@
 package net.xshivan.excercise1;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,12 +26,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ApplicationSettings applicationSettings = SharedPreferencesAccess.loadPreferences(getApplicationContext());
-        SharedPreferencesAccess.applyPreferences(applicationSettings, this);
+        final ApplicationSettings applicationSettings = SharedPreferencesAccess.loadPreferences(getApplicationContext());
 
-        if (applicationSettings.navigateToProductsOnStart) {
-            Intent intent = new Intent(getApplicationContext(), ProductListActivity.class);
-            startActivity(intent);
-        }
+        if (applicationSettings.navigateToProductsOnStart)
+            navigateToProductsOnStart();
+        else if (applicationSettings.promptToSeeWebsite)
+            AuthorWebsiteNavigator.promptToVisit(this);
+    }
+
+    private void navigateToProductsOnStart() {
+        Intent intent = new Intent(getApplicationContext(), ProductListActivity.class);
+        startActivity(intent);
     }
 }

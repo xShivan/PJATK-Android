@@ -26,7 +26,6 @@ public class ProductListActivity extends AppCompatActivity {
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
 
-
         new AlertDialog.Builder(this)
             .setMessage("Type in your product:")
             .setView(input)
@@ -57,6 +56,10 @@ public class ProductListActivity extends AppCompatActivity {
 
         listViewProducts.setAdapter(productListViewAdapter);
         productListViewAdapter.notifyDataSetChanged();
+
+        ApplicationSettings applicationSettings = SharedPreferencesAccess.loadPreferences(this);
+        if (applicationSettings.navigateToProductsOnStart && applicationSettings.promptToSeeWebsite)
+            AuthorWebsiteNavigator.promptToVisit(this);
     }
 
     private void getInitialProductList() {

@@ -22,22 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtViewFontSize" />
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RadioButton
-                android:text="Black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioButtonBlack" />
 
-            <RadioButton
-                android:text="Light"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioButtonLight"
-                android:checked="true" />
-        </RadioGroup>
+        <CheckBox
+            android:text="Prompt to see author's website"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBoxPromptToSeeWebsite" />
 
         <CheckBox
             android:text="Go to product list on start"
