@@ -38,3 +38,5 @@ captures/
 
 # Keystore files
 *.jks
+Excercise1/.idea/
+Excercise1/gradle/wrapper/gradle-wrapper.jar
