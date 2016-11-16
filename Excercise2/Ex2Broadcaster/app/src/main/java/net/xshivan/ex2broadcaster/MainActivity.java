@@ -10,8 +10,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void handleBtnSendClick(View view) {
         String message = ((EditText)findViewById(R.id.txtBoxMessage)).getText().toString();
-        Intent intent = new Intent(message);
-        sendBroadcast(intent, "net.xshivan.permissions.NOTIFY_BROADCAST_SENT");
+        Intent intent = new Intent();
+        intent.putExtra("message", message);
+        intent.setAction("net.xshivan.permissions.NOTIFY_BROADCAST_SENT");
+        sendBroadcast(intent);
     }
 
     @Override
