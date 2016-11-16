@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 
 public class NotificationReceiver extends BroadcastReceiver {
     private Context applicationContext;
@@ -25,6 +26,12 @@ public class NotificationReceiver extends BroadcastReceiver {
         nBuilder.setContentTitle("xShivan broadcaster message");
         nBuilder.setContentText(text);
         nBuilder.setSmallIcon(R.drawable.icon);
+
+        Intent broadcasterIntent = applicationContext.getPackageManager().getLaunchIntentForPackage("net.xshivan.ex2broadcaster");
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(applicationContext);
+        stackBuilder.addNextIntent(broadcasterIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        nBuilder.setContentIntent(resultPendingIntent);
 
         NotificationManager mNotificationManager = (NotificationManager) applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, nBuilder.build());
