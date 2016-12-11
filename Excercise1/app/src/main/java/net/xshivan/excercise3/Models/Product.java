@@ -1,8 +1,8 @@
-package net.xshivan.excercise1.Models;
+package net.xshivan.excercise3.Models;
 
 import com.orm.SugarRecord;
 
-import net.xshivan.excercise1.Adapters.ProductListViewItemColumns;
+import net.xshivan.excercise3.Adapters.ProductListViewItemColumns;
 
 import java.util.HashMap;
 

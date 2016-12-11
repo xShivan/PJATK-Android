@@ -1,4 +1,4 @@
-package net.xshivan.excercise1;
+package net.xshivan.excercise3;
 
 import org.junit.Test;
 

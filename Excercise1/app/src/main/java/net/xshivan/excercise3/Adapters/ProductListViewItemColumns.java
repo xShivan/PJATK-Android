@@ -1,4 +1,4 @@
-package net.xshivan.excercise1.Adapters;
+package net.xshivan.excercise3.Adapters;
 
 public class ProductListViewItemColumns {
     public static final String COLUMN_PRODUCT_NAME = "textViewProductName";

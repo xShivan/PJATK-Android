@@ -1,6 +1,6 @@
-package net.xshivan.excercise1;
+package net.xshivan.excercise3;
 
-import net.xshivan.excercise1.Models.Product;
+import net.xshivan.excercise3.Models.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;

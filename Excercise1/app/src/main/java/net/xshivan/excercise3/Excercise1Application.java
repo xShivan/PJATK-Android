@@ -1,4 +1,4 @@
-package net.xshivan.excercise1;
+package net.xshivan.excercise3;
 
 import android.content.res.Configuration;
 

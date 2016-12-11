@@ -1,4 +1,4 @@
-package net.xshivan.excercise1.Adapters;
+package net.xshivan.excercise3.Adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import net.xshivan.excercise1.DataAccess;
-import net.xshivan.excercise1.R;
+import net.xshivan.excercise3.DataAccess;
+import net.xshivan.excercise3.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

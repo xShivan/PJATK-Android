@@ -1,4 +1,4 @@
-package net.xshivan.excercise1;
+package net.xshivan.excercise3;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import net.xshivan.excercise1.Adapters.ProductListViewAdapter;
-import net.xshivan.excercise1.Adapters.ProductListViewItemColumns;
+import net.xshivan.excercise3.Adapters.ProductListViewAdapter;
+import net.xshivan.excercise3.Adapters.ProductListViewItemColumns;
 
 import java.util.ArrayList;
 import java.util.HashMap;
