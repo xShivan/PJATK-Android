@@ -1,17 +1,21 @@
 package net.xshivan.excercise3;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Pair;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import net.xshivan.excercise3.Adapters.ProductListViewAdapter;
 import net.xshivan.excercise3.Adapters.ProductListViewItemColumns;
+import net.xshivan.excercise3.Models.Product;
+import net.xshivan.excercise3.Tasks.PutProductTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,5 +78,9 @@ public class ProductListActivity extends AppCompatActivity {
         productList.add(temp);
         productListViewAdapter.notifyDataSetChanged();
         DataAccess.saveProducts(productList);
+
+        PutProductTask putProductTask = new PutProductTask();
+        putProductTask.execute(Product.fromHashMap(temp));
+
     }
 }

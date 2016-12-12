@@ -7,9 +7,9 @@ import net.xshivan.excercise3.Adapters.ProductListViewItemColumns;
 import java.util.HashMap;
 
 public class Product extends SugarRecord {
-    String name;
+    public String name;
 
-    Boolean isPurchased;
+    public Boolean isPurchased;
 
     public Product() { }
 
