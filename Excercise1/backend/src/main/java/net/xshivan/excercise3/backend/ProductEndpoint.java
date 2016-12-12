@@ -12,10 +12,15 @@ import com.google.api.server.spi.config.ApiNamespace;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyRange;
+import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Transaction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Named;
 
@@ -68,5 +73,27 @@ public class ProductEndpoint {
         }
 
         return productBean;
+    }
+
+    @ApiMethod(name = "fetchProducts")
+    public ArrayList<ProductBean> fetchProducts() {
+        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+
+        Query query = new Query(PROD_KEY);
+        List<Entity> results = datastoreService.prepare(query).asList(FetchOptions.Builder.withDefaults());
+
+        ArrayList<ProductBean> productBeans = new ArrayList<>();
+
+        for (Entity entity : results) {
+            ProductBean productBean = new ProductBean();
+
+            productBean.setId(entity.getKey().getId());
+            productBean.setIsPurchased((Boolean)entity.getProperty("isPurchased"));
+            productBean.setName((String)entity.getProperty("name"));
+
+            productBeans.add(productBean);
+        }
+
+        return productBeans;
     }
 }

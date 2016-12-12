@@ -62,7 +62,7 @@ public class ProductEndpointsAsyncTask extends AsyncTask<Pair<Context, String>, 
         productBean.setIsPurchased(product.isPurchased);
 
         try {
-            ProductBean updatedProductBean = productApiService.addProduct(productBean).execute();
+            ProductBean updatedProductBean = productApiService.putProduct(productBean).execute();
             product.setId(updatedProductBean.getId());
             product.name = updatedProductBean.getName();
             product.isPurchased = updatedProductBean.getIsPurchased();

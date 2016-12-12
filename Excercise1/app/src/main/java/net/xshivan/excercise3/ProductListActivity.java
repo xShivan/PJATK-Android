@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -15,10 +16,13 @@ import android.widget.ListView;
 import net.xshivan.excercise3.Adapters.ProductListViewAdapter;
 import net.xshivan.excercise3.Adapters.ProductListViewItemColumns;
 import net.xshivan.excercise3.Models.Product;
+import net.xshivan.excercise3.Tasks.GetProductsTask;
 import net.xshivan.excercise3.Tasks.PutProductTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ProductListActivity extends AppCompatActivity {
 
@@ -67,8 +71,21 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
     private void getInitialProductList() {
-        for (HashMap productHashMap : DataAccess.getProducts())
-            productList.add(productHashMap);
+        List<Product> products;
+
+        try {
+            GetProductsTask getProductsTask = new GetProductsTask();
+            products = getProductsTask.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        for (Product productHashMap : products)
+            productList.add(productHashMap.toHashMap());
     }
 
     private void addProduct(String product) {
