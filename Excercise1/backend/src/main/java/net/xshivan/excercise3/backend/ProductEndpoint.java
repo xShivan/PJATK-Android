@@ -12,6 +12,7 @@ import com.google.api.server.spi.config.ApiNamespace;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -73,6 +74,25 @@ public class ProductEndpoint {
         }
 
         return productBean;
+    }
+
+    @ApiMethod(name = "deleteProduct")
+    public void deleteProduct(@Named("productId") Long productId) {
+        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+        Transaction txn = datastoreService.beginTransaction();
+
+        try {
+            Key key = KeyFactory.createKey(PROD_KEY, productId);
+
+            Entity entity = datastoreService.get(key);
+            datastoreService.delete(entity.getKey());
+            txn.commit();
+        } catch (EntityNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (txn.isActive())
+                txn.rollback();
+        }
     }
 
     @ApiMethod(name = "fetchProducts")

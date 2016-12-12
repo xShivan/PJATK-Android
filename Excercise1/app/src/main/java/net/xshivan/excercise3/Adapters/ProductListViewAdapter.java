@@ -10,11 +10,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import net.xshivan.excercise3.DataAccess;
+import net.xshivan.excercise3.Models.Product;
 import net.xshivan.excercise3.R;
+import net.xshivan.excercise3.Tasks.DeleteProductTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 public class ProductListViewAdapter extends BaseAdapter {
 
@@ -68,9 +70,17 @@ public class ProductListViewAdapter extends BaseAdapter {
         productListItemViewModel.buttonDeleteProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                list.remove(internalPostion);
-                instance.notifyDataSetChanged();
-                DataAccess.saveProducts(instance.list);
+                HashMap productHash = list.get(internalPostion);
+                Long id = (long)productHash.get(ProductListViewItemColumns.COLUMN_ID);
+                try {
+                    new DeleteProductTask().execute(id).get();
+                    list.remove(internalPostion);
+                    instance.notifyDataSetChanged();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -81,7 +91,7 @@ public class ProductListViewAdapter extends BaseAdapter {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             map.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, b);
-            DataAccess.saveProducts(instance.list);
+            //DataAccess.saveProducts(instance.list);
             }
         });
 

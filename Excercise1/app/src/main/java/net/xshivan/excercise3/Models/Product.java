@@ -6,7 +6,17 @@ import net.xshivan.excercise3.Adapters.ProductListViewItemColumns;
 
 import java.util.HashMap;
 
-public class Product extends SugarRecord {
+public class Product {
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String name;
 
     public Boolean isPurchased;
@@ -14,7 +24,7 @@ public class Product extends SugarRecord {
     public Product() { }
 
     public Product(String name, Boolean isPurchased) {
-        super();
+        this.id = 0;
         this.name = name;
         this.isPurchased = isPurchased;
 
@@ -32,6 +42,7 @@ public class Product extends SugarRecord {
         HashMap hashMap = new HashMap();
         hashMap.put(ProductListViewItemColumns.COLUMN_PRODUCT_NAME, name);
         hashMap.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, isPurchased);
+        hashMap.put(ProductListViewItemColumns.COLUMN_ID, getId());
         return hashMap;
     }
 }
