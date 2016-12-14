@@ -93,11 +93,18 @@ public class ProductListActivity extends AppCompatActivity {
         hashProduct.put(ProductListViewItemColumns.COLUMN_PRODUCT_NAME, product);
         hashProduct.put(ProductListViewItemColumns.COLUMN_IS_PURCHASED, false);
         hashProduct.put(ProductListViewItemColumns.COLUMN_ID, 0);
-        productList.add(hashProduct);
-        productListViewAdapter.notifyDataSetChanged();
 
         PutProductTask putProductTask = new PutProductTask();
-        putProductTask.execute(Product.fromHashMap(hashProduct));
+        try {
+            Product apiProduct = putProductTask.execute(Product.fromHashMap(hashProduct)).get();
+            hashProduct.put(ProductListViewItemColumns.COLUMN_ID, apiProduct.getId());
+            productList.add(hashProduct);
+            productListViewAdapter.notifyDataSetChanged();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
     }
 }
