@@ -1,16 +1,15 @@
 package net.xshivan.excercise4;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
-import java.util.List;
+import java.io.IOException;
 
 public class AddPlaceActivity extends AppCompatActivity {
 
@@ -28,9 +27,19 @@ public class AddPlaceActivity extends AppCompatActivity {
 
         if (location == null) {
             // TODO: Error
+            return;
         }
         else {
+            EditText editTextName = (EditText)findViewById(R.id.editTextPlaceName);
+            EditText editTextDescription = (EditText)findViewById(R.id.editTextPlaceDescription);
 
+            String name = editTextName.getText().toString();
+            if (name == null || name.isEmpty()) {
+                // TODO: Cancel/Error
+                return;
+            }
+
+            CoordinateManager.store(new Coordinates(location, name, editTextDescription.getText().toString()), getApplicationContext());
         }
     }
 
