@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_place"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="net.xshivan.excercise4.AddPlaceActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
+
+        <TextView
+            android:text="Nazwa miejsca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/editTextPlaceName" />
+
+        <TextView
+            android:text="Opis miejsca"
+            android:layout_width="match_parent"
+            android:id="@+id/textView2"
+            android:layout_height="50dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editTextPlaceDescription"
+            android:layout_weight="0.17" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <Button
+                android:text="Dodaj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAddPlace"
+                android:layout_weight="1"
+                android:onClick="addPlace" />
+
+            <Button
+                android:text="Anuluj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button2"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
