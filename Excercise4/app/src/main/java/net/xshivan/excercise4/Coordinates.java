@@ -5,7 +5,7 @@ import android.location.Location;
 public class Coordinates {
     public double latitude;
 
-    public double longtitude;
+    public double longitude;
 
     public String name;
 
@@ -18,6 +18,6 @@ public class Coordinates {
         this.description = description;
 
         this.latitude = location.getLatitude();
-        this.longtitude = location.getLongitude();
+        this.longitude = location.getLongitude();
     }
 }
