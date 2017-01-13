@@ -27,6 +27,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         CoordinateManager.initialize(getApplicationContext());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mMap == null)
+            return;
+
+        CoordinateManager.initialize(getApplicationContext());
+        addMarkers();
+    }
 
     /**
      * Manipulates the map once available.
@@ -40,20 +50,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        /*LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
-
-        for (Coordinates coords : CoordinateManager.getCoordinates()) {
-            LatLng mapCoords = new LatLng(coords.latitude, coords.longitude);
-            mMap.addMarker((new MarkerOptions().position(mapCoords)).title(coords.name));
-        }
+        addMarkers();
     }
 
     public void handleBtnAddPlaceClick(View view) {
         Intent intent = new Intent(getApplicationContext(), AddPlaceActivity.class);
         startActivity(intent);
+    }
+
+    public void handleBtnPlacesClick(View view) {
+        Intent intent = new Intent(getApplicationContext(), PlacesActivity.class);
+        startActivity(intent);
+    }
+
+    private void addMarkers() {
+        mMap.clear();
+        for (Coordinates coords : CoordinateManager.getCoordinates()) {
+            LatLng mapCoords = new LatLng(coords.latitude, coords.longitude);
+            mMap.addMarker((new MarkerOptions().position(mapCoords)).title(coords.name));
+        }
     }
 }

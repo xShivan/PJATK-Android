@@ -82,7 +82,7 @@ public class AddPlaceActivity extends AppCompatActivity {
     }
 
     private Location getLocation(String provider) {
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        locationManager.requestLocationUpdates(provider, 0, 0, locationListener);
+        return locationManager.getLastKnownLocation(provider);
     }
 }

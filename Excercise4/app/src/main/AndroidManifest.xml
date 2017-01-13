@@ -38,7 +38,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddPlaceActivity"></activity>
+        <activity android:name=".AddPlaceActivity" />
+        <activity android:name=".PlacesActivity"></activity>
     </application>
 
 </manifest>

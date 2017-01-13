@@ -19,22 +19,12 @@ public class CoordinateManager {
 
     public static void store(Coordinates coords, Context context) {
         coordinates.add(coords);
+        saveCoordsFile(context);
+    }
 
-        Gson gson = new Gson();
-        String coordsJson = gson.toJson(coordinates);
-
-        File coordsFile = getCoordsFile(context);
-        if (coordsFile.exists())
-            coordsFile.delete();
-
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(coordsFile.getName(), Context.MODE_PRIVATE));
-            outputStreamWriter.write(coordsJson);
-            outputStreamWriter.close();
-        }
-        catch (Exception ex) {
-            Log.i("ERR", "An error occured while storing coordinates: " + ex.toString());
-        }
+    public static void clearAll(Context context) {
+        coordinates.clear();
+        saveCoordsFile(context);
     }
 
     public static ArrayList<Coordinates> getCoordinates() {
@@ -62,6 +52,24 @@ public class CoordinateManager {
             coordinates = gson.fromJson(coordsJson, coordinatesListType);
         } catch (Exception ex) {
             Log.i("ERR", "An error occured while initializing coordinates: " + ex.toString());
+        }
+    }
+
+    private static void saveCoordsFile(Context context) {
+        Gson gson = new Gson();
+        String coordsJson = gson.toJson(coordinates);
+
+        File coordsFile = getCoordsFile(context);
+        if (coordsFile.exists())
+            coordsFile.delete();
+
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(coordsFile.getName(), Context.MODE_PRIVATE));
+            outputStreamWriter.write(coordsJson);
+            outputStreamWriter.close();
+        }
+        catch (Exception ex) {
+            Log.i("ERR", "An error occured while storing coordinates: " + ex.toString());
         }
     }
 
