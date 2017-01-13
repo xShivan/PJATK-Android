@@ -1,6 +1,7 @@
 package net.xshivan.excercise4;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -40,7 +41,14 @@ public class AddPlaceActivity extends AppCompatActivity {
             }
 
             CoordinateManager.store(new Coordinates(location, name, editTextDescription.getText().toString()), getApplicationContext());
+            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+            startActivity(intent);
         }
+    }
+
+    public void cancelAddPlace(View view) {
+        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+        startActivity(intent);
     }
 
     @Override
