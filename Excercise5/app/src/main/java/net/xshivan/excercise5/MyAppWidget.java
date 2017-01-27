@@ -8,16 +8,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class MyAppWidget extends AppWidgetProvider {
+
+    private Random r = new Random();
 
     private final String INTENT_SOUND = "net.xshivan.excercise5.INTENT_SOUND";
 
     private final String INTENT_PICTURE = "net.xshivan.excercise5.INTENT_PICTURE";
+
+    private Boolean imgActive = false;
+
+    private Boolean imgInvert = false;
 
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,int[] appWidgetIds) {
 
@@ -34,7 +40,7 @@ public class MyAppWidget extends AppWidgetProvider {
 
             views.setOnClickPendingIntent(R.id.btnWeb, pending);
             views.setOnClickPendingIntent(R.id.btnSound, getPendingSelfIntent(context, INTENT_SOUND));
-            views.setOnClickPendingIntent(R.id.btImage, getPendingSelfIntent(context, INTENT_PICTURE));
+            views.setOnClickPendingIntent(R.id.btnImage, getPendingSelfIntent(context, INTENT_PICTURE));
 
             appWidgetManager.updateAppWidget(currentWidgetId,views);
             Toast.makeText(context, "widget added", Toast.LENGTH_SHORT).show();
@@ -52,7 +58,15 @@ public class MyAppWidget extends AppWidgetProvider {
 
         if (INTENT_PICTURE.equals(intent.getAction())) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.my_app_widget);
-            views.setImageViewResource(R.id.imageView, R.drawable.nokia);
+            int randomNum = r.nextInt(2);
+
+            if (randomNum == 0)
+                views.setImageViewResource(R.id.imageView, R.drawable.nokia);
+            else
+                views.setImageViewResource(R.id.imageView, R.drawable.nokia_negative);
+
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            appWidgetManager.updateAppWidget(new ComponentName(context, MyAppWidget.class), views);
         }
     }
 
